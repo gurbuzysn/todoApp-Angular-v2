@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Model, TodoItem } from './model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,20 @@ import { Model, TodoItem } from './model';
 export class AppComponent {
   model = new Model();
   isDisplay = false;  
+  todoForm: FormGroup;
 
-  addItem(value : string){
-    if(value != ""){
-      this.model.items.push(new TodoItem(value,false));
+  constructor(private fb: FormBuilder){
+    this.todoForm = this.fb.group({
+      todoItemText: ['', [Validators.required, Validators.minLength(3)]],
+    });
+  }
+
+
+  addItem(): void{
+    const value = this.todoForm.value.todoItemText;
+    if(this.todoForm.valid && value){
+      this.model.items.push(new TodoItem(value, false));
+      this.todoForm.reset();
     }
   }
 

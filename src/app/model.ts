@@ -5,11 +5,11 @@ export class Model{
     constructor(){
         this.title = "Todo App";
         this.items = [
-            new TodoItem("Uyku",false),
-            new TodoItem("Namaz",false),
-            new TodoItem("Açlık",false),
             new TodoItem("Spor",false),
-            new TodoItem("Kitap",false),
+            new TodoItem("Kitap Oku",false),
+            new TodoItem("Market Alışverişi",false),
+            new TodoItem("Proje",false),
+            new TodoItem("Sinema",false),
            
         ]
     }

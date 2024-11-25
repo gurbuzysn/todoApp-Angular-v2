@@ -11,15 +11,49 @@
 <div class="container">
   <div class="row">
     <div class="col-8">
+
+
+    <form [formGroup]="todoForm" (ngSubmit)="addItem()">
+
       <div class="input-group mb-3">
-        <input class="form-control me-3" type="text" #todoItemText>
-        <button class="btn btn-primary" (click)="addItem(todoItemText.value); todoItemText.value=''">Add Item</button>
+
+        <input 
+        type="text" 
+        class="form-control me-3"
+        placeholder="Enter a todo item" 
+        formControlName="todoItemText"
+        />
+
+        <button 
+        type="submit"
+        class="btn btn-primary" 
+        [disabled]="todoForm.invalid"
+        >
+        Add Item
+        </button>
+
       </div>
+
+      <div *ngif="todoForm.get('todoItemText')?.invalid && (todoForm.get('todoItemText')?.dirty || todoForm.get('todoItemText')?.touched)">
+        <small class="text-danger" *ngif="todoForm.get('todoItemText')?.errors?.required">
+          Bu alan gereklidir.
+        </small>
+        <small class="text-danger" *ngif="todoForm.get('todoForm.get('todoItemText')?.errors?.minlength')">
+          En az 3 karakter giriniz.
+        </small>
+      </div>
+    </form>
+
       <div class="form-control mb-3">
-        <input class="form-control-input me-3" type="checkbox" [(ngModel)]="isDisplay" id="isDisplay">
-        <label class="form-control-label" for="isDisplay">ShowAll</label>
+        <input 
+        class="form-check-input me-3" 
+        type="checkbox" 
+        [(ngModel)]="isDisplay" 
+        id="isDisplay"
+        />
+        <label class="form-check-label" for="isDisplay">ShowAll</label>
       </div>
-    </div>
+    
 
     <table class="table table-bordered table-striped table-hover">
       <thead>
@@ -42,6 +76,7 @@
            [ngSwitch]="item.status">
             <div *ngSwitchCase="true">Yapıldı</div>
             <div *ngSwitchCase="false">Bekliyor</div>
+          >
           </td>
 
         </tr>
